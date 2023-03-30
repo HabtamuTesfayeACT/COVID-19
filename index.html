@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <!-- Latest compiled and minified js and CSS bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+  <!-- this is the highchart library -->
+  <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+  <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+  <!-- data table script -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/searchpanes/2.1.2/js/dataTables.searchPanes.min.js"></script>
+  <script src="https://cdn.datatables.net/select/1.6.2/js/dataTables.select.min.js"></script>
+  <!-- data table css -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/2.1.2/css/searchPanes.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/select/1.6.2/css/select.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+
+    <!-- main css -->
+    <link rel="stylesheet" href="style.css">
+  <title>COVID Information Dashboar</title>
+</head>
+
+<body class="bg-light">
+  <!-- ======= Mobile nav toggle button ======= -->
+  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+
+  <header id="header">
+    <div class="d-flex flex-column">
+
+      <div class="profile">
+        <img src="logo.svg" alt="" class="img-fluid">
+        <h1 class="text-light ps-4 pt-3"><a href="index.html">Ethiopia</a></h1>
+      </div>
+
+      <nav id="navbar" class="nav-menu navbar">
+        <ul>
+          <li>
+            <div class="info d-flex justify-content-center align-items-center ps-3">
+              <p>Cases</p>
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+              <h1 id="case"></h1>
+            </div>
+          </li>
+          <li>
+            <div class="info d-flex justify-content-center align-items-center ps-3">
+              <p>Status</p>
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+              <h1 id="Stat"></h1>
+            </div>
+          </li>
+        </ul>
+      </nav><!-- .nav-menu -->
+    </div>
+  </header><!-- End Header -->
+  <div id="main">
+    <div class="container-fluid mb-5">
+      <div class="row m-1">
+        <div class="card">
+          <div class="card-body p-1">
+            <h4 class="text-center ">COVID Information Dashboard</h4>
+          </div>
+        </div>
+      </div>
+      <div class="row p-2">
+        <div class="col-md-3 card m-1">
+          <div class="card-body">
+            <h3 id="totalCase"></h3>
+            <p>Coronavirus Cases</p>
+          </div>
+        </div>
+        <div class="col-md-3 card m-1">
+          <div class="card-body">
+            <h3 id="Deaths"></h3>
+            <p>Deaths</p>
+          </div>
+        </div>
+        <div class="col-md-3 card m-1">
+          <div class="card-body">
+            <h3 id="Recov"></h3>
+            <p>Recovered</p>
+          </div>
+        </div>
+        <div class="card w-20 my-1 ms-1">
+          <div class="card-body">
+            <h5 id="date"></h5>
+            <p>Date</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Global Summary</div>
+            <div class="card-body">
+              <div class="container" id="map">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+              <div class="col-md-6"> Country Detail</div>
+               <div class=" col-md-6 d-flex justify-content-left align-items-left border-1">
+                <input class="form-control me-1" type="text" id="search" placeholder="input country">
+               <button class="btn btn-primary" type="button" onclick="drawSearch()" id="srch">Search</button></div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="container" id="country-comparison-chart"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Global situation Data</div>
+            <div class="card-body">
+              <figure class="highcharts-figure">
+                <div id="container"></div>
+              </figure>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Random 5 Countries data</div>
+            <div class="card-body">
+              <div class="container" id="chart4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-md-12">
+          <div class="card ">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="myTable">
+                <thead class="justify-content-center">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">NewConfirmed</th>
+                    <th scope="col">TotalConfirmed</th>
+                    <th scope="col">NewDeaths</th>
+                    <th scope="col">TotalDeaths</th>
+                    <th scope="col">NewRecovered</th>
+                    <th scope="col">TotalRecovered</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="sscript.js"></script>
+
+</body>
+
+</html>
