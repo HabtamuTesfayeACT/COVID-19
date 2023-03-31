@@ -1,5 +1,4 @@
-# COVID-19
- # COVID dashbord
+# COVID dashbord
 
 ## Introduction
 
