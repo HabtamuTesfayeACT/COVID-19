@@ -61,7 +61,7 @@ async function storeCountryDate(data){
  draw4(CounrtyArray,tOTALaRRAY,toalDeathhArray,newConfi);
 }
 
-  var i=0;
+  var i=1;
 async function appendDataToTable(data) {
     document.getElementById('totalCase').innerHTML=data.Global.TotalConfirmed.toLocaleString("en-US");
     document.getElementById('Deaths').innerHTML=data.Global.TotalDeaths.toLocaleString("en-US");
