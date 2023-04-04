@@ -27,7 +27,29 @@ async function fetchinfo() {
       });
   }
 fetchinfo();
+/*=================================================== filter ============================================*/
+loadCountries();
+let countries = [];
+function loadCountries() {
+    fetch('https://api.covid19api.com/countries')
+        .then(response => response.json())
+        .then(data => {
+            countries = data.map(item => item.Country);
+            renderCountryOptions(countries);
+        })
+        .catch(error => {
+            console.error('Error retrieving data:', error);
+        });
+}
 
+function renderCountryOptions(countries) {
+    let optionsHtml = '';
+    countries.forEach(country => {
+        optionsHtml += `<option value="${country}">${country}</option>`;
+    });
+    document.querySelector('#country-list').innerHTML = optionsHtml;
+}
+/*=====================================================================================================================================*/
 async function fetchlive(){
 await fetch('https://api.covid19api.com/dayone/country/Ethiopia/status/confirmed/live')
 .then(response =>{
@@ -350,7 +372,7 @@ async function drawSearch(){
     let conti =0;
     let area = document.getElementById('country-comparison-chart').innerHTML;
     area ="";
-    const country = document.querySelector('#search').value;
+    const country = document.querySelector('#country').value;
     console.log(country);
     const search = 'https://api.covid19api.com/live/country/'
     await fetch(`${search}${country}`)
