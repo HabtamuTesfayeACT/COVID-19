@@ -326,7 +326,7 @@ Highcharts.chart('chart4', {
 });
 }
 async function fetchdata() {
-    await fetch('https://api.covid19api.com/live/country/south-africa')
+     fetch('https://api.covid19api.com/live/country/south-africa')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
